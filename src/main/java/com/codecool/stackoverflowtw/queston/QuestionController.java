@@ -1,8 +1,8 @@
-package com.codecool.stackoverflowtw.controller;
+package com.codecool.stackoverflowtw.queston;
 
-import com.codecool.stackoverflowtw.controller.dto.NewQuestionDTO;
-import com.codecool.stackoverflowtw.controller.dto.QuestionDTO;
-import com.codecool.stackoverflowtw.service.QuestionService;
+import com.codecool.stackoverflowtw.queston.dto.NewQuestionDTO;
+import com.codecool.stackoverflowtw.queston.dto.QuestionDTO;
+import com.codecool.stackoverflowtw.queston.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +19,7 @@ public class QuestionController {
     }
 
     @GetMapping("/all")
-    public List<QuestionDTO> getAllQuestions() {
+    public List<Question> getAllQuestions() {
         return questionService.getAllQuestions();
     }
 
