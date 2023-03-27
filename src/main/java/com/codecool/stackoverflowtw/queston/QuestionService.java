@@ -1,8 +1,7 @@
-package com.codecool.stackoverflowtw.service;
+package com.codecool.stackoverflowtw.queston;
 
-import com.codecool.stackoverflowtw.dao.QuestionsDAO;
-import com.codecool.stackoverflowtw.controller.dto.NewQuestionDTO;
-import com.codecool.stackoverflowtw.controller.dto.QuestionDTO;
+import com.codecool.stackoverflowtw.queston.dto.NewQuestionDTO;
+import com.codecool.stackoverflowtw.queston.dto.QuestionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,14 +18,14 @@ public class QuestionService {
         this.questionsDAO = questionsDAO;
     }
 
-    public List<QuestionDTO> getAllQuestions() {
+    public List<Question> getAllQuestions() {
         // TODO
-        return List.of(new QuestionDTO(1, "example title", "example desc", LocalDateTime.now()));
+        return questionsDAO.getAllQuestion();
     }
 
     public QuestionDTO getQuestionById(int id) {
         // TODO
-        questionsDAO.sayHi();
+//        questionsDAO.sayHi();
         return new QuestionDTO(id, "example title", "example desc", LocalDateTime.now());
     }
 
