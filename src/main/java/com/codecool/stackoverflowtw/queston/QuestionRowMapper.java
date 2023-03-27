@@ -15,7 +15,7 @@ public class QuestionRowMapper implements RowMapper<Question> {
                 rs.getInt("client_id"),
                 rs.getString("title"),
                 rs.getString("description"),
-                LocalDate.parse(rs.getString("date"))
+                LocalDateTime.parse(rs.getString("date"))
         );
     }
 }
