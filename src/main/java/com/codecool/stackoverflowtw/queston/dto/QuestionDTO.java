@@ -1,4 +1,4 @@
-package com.codecool.stackoverflowtw.controller.dto;
+package com.codecool.stackoverflowtw.queston.dto;
 
 import java.time.LocalDateTime;
 

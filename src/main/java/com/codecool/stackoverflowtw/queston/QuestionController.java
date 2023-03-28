@@ -1,8 +1,7 @@
-package com.codecool.stackoverflowtw.controller;
+package com.codecool.stackoverflowtw.queston;
 
-import com.codecool.stackoverflowtw.controller.dto.NewQuestionDTO;
-import com.codecool.stackoverflowtw.controller.dto.QuestionDTO;
-import com.codecool.stackoverflowtw.service.QuestionService;
+import com.codecool.stackoverflowtw.queston.dto.NewQuestionDTO;
+import com.codecool.stackoverflowtw.queston.dto.QuestionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +18,7 @@ public class QuestionController {
     }
 
     @GetMapping("/all")
-    public List<QuestionDTO> getAllQuestions() {
+    public List<Question> getAllQuestions() {
         return questionService.getAllQuestions();
     }
 
@@ -30,11 +29,12 @@ public class QuestionController {
 
     @PostMapping("/")
     public int addNewQuestion(@RequestBody NewQuestionDTO question) {
-        return 0;
+        return questionService.addNewQuestion(question);
     }
 
     @DeleteMapping("/{id}")
     public boolean deleteQuestionById(@PathVariable int id) {
-        return false;
+        questionService.deleteQuestionById(id);
+        return true;
     }
 }
