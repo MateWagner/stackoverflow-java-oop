@@ -5,9 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.sql.PreparedStatement;
-import java.sql.Statement;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +13,15 @@ import java.util.Map;
 @Repository
 public class AnswersDaoJdbc implements AnswersDAO {
     private final JdbcTemplate jdbcTemplate;
+    private final static String SQL_QUERY_GET_ALL_ANSWER = """ 
+            SELECT * FROM answer;
+            """;
+    private final static String SQL_QUERY_ADD_NEW_ANSWER = """
+            INSERT INTO answer(description,date,question_id,answer_to_id,client_id) VALUES (?,?,?,?,?)
+            """;
+    private final static String SQL_QUERY_DELETE_ANSWER = """
+            DELETE FROM answer WHERE id = ?
+            """;
 
     public AnswersDaoJdbc(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -22,30 +29,35 @@ public class AnswersDaoJdbc implements AnswersDAO {
 
     @Override
     public List<Answer> getAllAnswer() {
-        String sql = """
-                SELECT * FROM answer;
-                """;
-        return jdbcTemplate.query(sql, new AnswerRowMapper());
+        return jdbcTemplate.query(SQL_QUERY_GET_ALL_ANSWER, new AnswerRowMapper());
     }
 
     @Override
     public Integer addNewAnswer(NewAnswerDTO newAnswerDTO) {
         GeneratedKeyHolder generatedKeyHolder = new GeneratedKeyHolder();
-        String sql = """
-                INSERT INTO answer(description,date,question_id,answer_to_id,client_id) VALUES (?,?,?,?,?)
-                """;
-        jdbcTemplate.update(con -> {
-            PreparedStatement statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            statement.setString(1, newAnswerDTO.desc());
-            statement.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
-            statement.setInt(3, newAnswerDTO.questionId());
-            statement.setObject(4, newAnswerDTO.answerToId().orElse(null));
-            statement.setInt(5, newAnswerDTO.clientId());
-            return statement;
-        }, generatedKeyHolder);
+
+        jdbcTemplate.update(connection -> prepareAddNewAnswerPreparedStatement(connection, newAnswerDTO), generatedKeyHolder);
 
         Map<String, Object> keys = generatedKeyHolder.getKeys();
         if (keys == null) return -1;
         return (Integer) keys.get("id");
     }
+
+    private PreparedStatement prepareAddNewAnswerPreparedStatement(Connection connection, NewAnswerDTO newAnswerDTO) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement(SQL_QUERY_ADD_NEW_ANSWER, Statement.RETURN_GENERATED_KEYS);
+
+        statement.setString(1, newAnswerDTO.desc());
+        statement.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
+        statement.setInt(3, newAnswerDTO.questionId());
+        statement.setObject(4, newAnswerDTO.answerToId().orElse(null));
+        statement.setInt(5, newAnswerDTO.clientId());
+
+        return statement;
+    }
+
+    @Override
+    public void deleteAnswer(Integer answerId) {
+        jdbcTemplate.update(SQL_QUERY_DELETE_ANSWER, answerId);
+    }
+
 }

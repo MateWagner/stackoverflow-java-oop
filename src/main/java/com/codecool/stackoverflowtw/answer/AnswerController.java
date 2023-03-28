@@ -25,5 +25,8 @@ public class AnswerController {
     public Integer postNewAnswer(@RequestBody NewAnswerDTO answerDTO){
         return answerService.postNewAnswer(answerDTO);
     }
-
+    @DeleteMapping("/{answerId}")
+    public void deleteAnswer(@PathVariable Integer answerId) {
+        answerService.deleteAnswer(answerId);
+    }
 }

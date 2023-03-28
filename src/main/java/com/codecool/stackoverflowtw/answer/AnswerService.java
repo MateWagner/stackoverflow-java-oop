@@ -19,7 +19,11 @@ public class AnswerService {
         return answersDAO.getAllAnswer();
     }
 
-    public Integer postNewAnswer(NewAnswerDTO newAnswerDTO){
+    public Integer postNewAnswer(NewAnswerDTO newAnswerDTO) {
         return answersDAO.addNewAnswer(newAnswerDTO);
+    }
+
+    public void deleteAnswer(Integer answerId) {
+        answersDAO.deleteAnswer(answerId);
     }
 }
