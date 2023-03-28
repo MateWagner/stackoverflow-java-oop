@@ -16,9 +16,18 @@ public class ClientDaoJdbc implements ClientDAO {
     @Override
     public List<Client> getAllClients() {
         String sql = """
-                SELECT id, client_id, title, description, date
-                FROM question;
+                SELECT *
+                FROM client;
                 """;
         return jdbcTemplate.query(sql, new ClientRowMapper());
     }
+    /*@Override
+    public List<Client> getClientByID(int id){
+        String sql = """
+                SELECT *
+                FROM client
+                WHERE (id = 1);
+                """;
+        return jdbcTemplate.query(sql, new ClientRowMapper());
+    }*/
 }

@@ -4,7 +4,6 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 
 public class ClientRowMapper implements RowMapper<Client> {
     @Override
@@ -14,7 +13,7 @@ public class ClientRowMapper implements RowMapper<Client> {
                 rs.getString("name"),
                 rs.getString("email"),
                 rs.getString("password"),
-                LocalDateTime.parse(rs.getString("date"))
+                rs.getString("date")
         );
     }
 }

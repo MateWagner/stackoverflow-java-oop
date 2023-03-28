@@ -10,7 +10,6 @@ import java.util.List;
 @Service
 public class ClientService {
     private ClientDAO clientDAO;
-
     @Autowired
     public ClientService(ClientDAO clientDAO) {
         this.clientDAO = clientDAO;
@@ -20,9 +19,9 @@ public class ClientService {
         // TODO
         return clientDAO.getAllClients();
     }
-    public ClientDTO getClientById(int id) {
+    public Client getClientById(int id) {
         // TODO
-        return new ClientDTO(0, "name", "email", "password", null);
+        return clientDAO.getAllClients().get(id);
     }
     public boolean deleteClientById(int id) {
         // TODO

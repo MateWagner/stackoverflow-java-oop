@@ -11,20 +11,18 @@ import java.util.List;
 @RequestMapping("client")
 public class ClientController {
     private final ClientService clientService;
-
     @Autowired
     public ClientController(ClientService clientService) {
         this.clientService = clientService;
     }
-
     @GetMapping("/all")
     public List<Client> getAllClient() {
         return clientService.getAll();
     }
 
     @GetMapping("/{id}")
-    public ClientDTO getClientById(@PathVariable int id) {
-        return null;
+    public Client getClientById(@PathVariable int id) {
+        return clientService.getClientById(id);
     }
 
     @PostMapping("/")
