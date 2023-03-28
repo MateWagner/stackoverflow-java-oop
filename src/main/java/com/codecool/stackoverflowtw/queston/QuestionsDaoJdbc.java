@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Repository
 public class QuestionsDaoJdbc implements QuestionsDAO {
@@ -58,6 +59,17 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
                 """;
         return  jdbcTemplate.update(sql,id);
 
+    }
+
+    @Override
+    public Optional<Question> getQuestionById(int id) {
+        String sql = """
+                SELECT * FROM question
+                WHERE id = ?
+                """;
+        return jdbcTemplate.query(sql, new QuestionRowMapper(), id)
+                .stream()
+                .findFirst();
     }
 
 }
