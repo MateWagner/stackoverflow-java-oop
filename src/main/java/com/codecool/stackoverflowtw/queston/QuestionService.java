@@ -35,8 +35,10 @@ public class QuestionService {
     }
 
     public int addNewQuestion(NewQuestionDTO question) {
-        // TODO
-        int createdId = 0;
-        return createdId;
+        int id = questionsDAO.addNewQuestion(question);
+        if (id == -1) {
+            throw new IllegalStateException("oops something went wrong");
+        }
+        return id;
     }
 }
