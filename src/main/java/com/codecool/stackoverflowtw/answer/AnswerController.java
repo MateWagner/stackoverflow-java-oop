@@ -22,11 +22,17 @@ public class AnswerController {
     }
 
     @PostMapping("/")
-    public Integer postNewAnswer(@RequestBody NewAnswerDTO answerDTO){
+    public Integer postNewAnswer(@RequestBody NewAnswerDTO answerDTO) {
         return answerService.postNewAnswer(answerDTO);
     }
+
     @DeleteMapping("/{answerId}")
     public void deleteAnswer(@PathVariable Integer answerId) {
         answerService.deleteAnswer(answerId);
+    }
+
+    @GetMapping("/{answerId}")
+    public Answer getAnswer(@PathVariable Integer answerId) {
+        return answerService.getAnswer(answerId);
     }
 }

@@ -8,4 +8,6 @@ public interface AnswersDAO {
     List<Answer> getAllAnswer();
     Integer addNewAnswer(NewAnswerDTO newAnswerDTO);
     void deleteAnswer(Integer answerId);
+
+    Answer getAnswer(Integer answerId);
 }

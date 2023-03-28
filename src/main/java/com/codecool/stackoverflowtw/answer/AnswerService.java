@@ -26,4 +26,8 @@ public class AnswerService {
     public void deleteAnswer(Integer answerId) {
         answersDAO.deleteAnswer(answerId);
     }
+
+    public Answer getAnswer(Integer answerId){
+        return answersDAO.getAnswer(answerId);
+    }
 }

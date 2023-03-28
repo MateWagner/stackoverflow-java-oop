@@ -22,6 +22,9 @@ public class AnswersDaoJdbc implements AnswersDAO {
     private final static String SQL_QUERY_DELETE_ANSWER = """
             DELETE FROM answer WHERE id = ?
             """;
+    private final static String SQL_QUERY_GET_ANSWER_BY_ID = """
+            SELECT * FROM answer WHERE id = ?
+            """;
 
     public AnswersDaoJdbc(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -43,6 +46,18 @@ public class AnswersDaoJdbc implements AnswersDAO {
         return (Integer) keys.get("id");
     }
 
+    @Override
+    public void deleteAnswer(Integer answerId) {
+        jdbcTemplate.update(SQL_QUERY_DELETE_ANSWER, answerId);
+    }
+
+    @Override
+    public Answer getAnswer(Integer answerId) {
+        List<Answer> answers = jdbcTemplate.query(SQL_QUERY_GET_ANSWER_BY_ID, new AnswerRowMapper(), answerId);
+        return answers.isEmpty()? null : answers.get(0);
+    }
+
+
     private PreparedStatement prepareAddNewAnswerPreparedStatement(Connection connection, NewAnswerDTO newAnswerDTO) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(SQL_QUERY_ADD_NEW_ANSWER, Statement.RETURN_GENERATED_KEYS);
 
@@ -54,10 +69,4 @@ public class AnswersDaoJdbc implements AnswersDAO {
 
         return statement;
     }
-
-    @Override
-    public void deleteAnswer(Integer answerId) {
-        jdbcTemplate.update(SQL_QUERY_DELETE_ANSWER, answerId);
-    }
-
 }
