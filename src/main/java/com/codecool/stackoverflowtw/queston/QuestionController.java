@@ -2,7 +2,6 @@ package com.codecool.stackoverflowtw.queston;
 
 import com.codecool.stackoverflowtw.queston.dto.NewQuestionDTO;
 import com.codecool.stackoverflowtw.queston.dto.QuestionDTO;
-import com.codecool.stackoverflowtw.queston.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,6 +34,7 @@ public class QuestionController {
 
     @DeleteMapping("/{id}")
     public boolean deleteQuestionById(@PathVariable int id) {
-        return false;
+        questionService.deleteQuestionById(id);
+        return true;
     }
 }
