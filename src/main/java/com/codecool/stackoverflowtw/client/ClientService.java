@@ -3,9 +3,11 @@ package com.codecool.stackoverflowtw.client;
 import com.codecool.stackoverflowtw.client.dto.ClientDTO;
 import com.codecool.stackoverflowtw.client.dto.NewClientDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ClientService {
@@ -20,12 +22,13 @@ public class ClientService {
         return clientDAO.getAllClients();
     }
     public Client getClientById(int id) {
-        // TODO
-        return clientDAO.getAllClients().get(id);
+
+        Optional<Client> clientOptional = clientDAO.getClientByID(id);
+        //if (clientOptional.isEmpty())
+        return null;
     }
     public boolean deleteClientById(int id) {
-        // TODO
-        return false;
+        return clientDAO.deleteClientByID(id);
     }
     public int addNewClient(NewClientDTO client) {
         // TODO

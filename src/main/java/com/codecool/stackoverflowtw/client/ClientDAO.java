@@ -1,8 +1,10 @@
 package com.codecool.stackoverflowtw.client;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ClientDAO {
     List<Client> getAllClients();
-    //List<Client> getClientByID(int id);
+    Optional<Client> getClientByID(int id);
+    Boolean deleteClientByID(int id);
 }

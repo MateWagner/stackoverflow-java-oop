@@ -32,6 +32,6 @@ public class ClientController {
 
     @DeleteMapping("/{id}")
     public boolean deleteClientById(@PathVariable int id) {
-        return false;
+        return clientService.deleteClientById(id);
     }
 }
