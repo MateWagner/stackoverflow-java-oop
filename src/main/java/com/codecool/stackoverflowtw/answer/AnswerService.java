@@ -1,5 +1,6 @@
 package com.codecool.stackoverflowtw.answer;
 
+import com.codecool.stackoverflowtw.answer.dto.NewAnswerDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,5 +17,9 @@ public class AnswerService {
 
     public List<Answer> getAllAnswers() {
         return answersDAO.getAllAnswer();
+    }
+
+    public Integer postNewAnswer(NewAnswerDTO newAnswerDTO){
+        return answersDAO.addNewAnswer(newAnswerDTO);
     }
 }

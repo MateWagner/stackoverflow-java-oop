@@ -22,4 +22,5 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
                 """;
         return jdbcTemplate.query(sql, new QuestionRowMapper());
     }
+
 }
