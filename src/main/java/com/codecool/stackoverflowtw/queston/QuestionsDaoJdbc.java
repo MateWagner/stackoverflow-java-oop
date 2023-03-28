@@ -50,4 +50,14 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
         return (Integer) keys.get("id");
     }
 
+    @Override
+    public int deleteQuestionById(int id) {
+        String sql = """
+                DELETE FROM question
+                WHERE id = ?
+                """;
+        return  jdbcTemplate.update(sql,id);
+
+    }
+
 }

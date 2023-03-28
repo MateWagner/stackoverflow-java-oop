@@ -7,4 +7,5 @@ import java.util.List;
 public interface QuestionsDAO {
     List<Question> getAllQuestion();
     Integer addNewQuestion(NewQuestionDTO newQuestionDTO);
+    int deleteQuestionById(int id);
 }

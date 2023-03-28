@@ -1,5 +1,6 @@
 package com.codecool.stackoverflowtw.queston;
 
+import com.codecool.stackoverflowtw.exception.NotFoundException;
 import com.codecool.stackoverflowtw.queston.dto.NewQuestionDTO;
 import com.codecool.stackoverflowtw.queston.dto.QuestionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +25,14 @@ public class QuestionService {
     }
 
     public QuestionDTO getQuestionById(int id) {
-        // TODO
-//        questionsDAO.sayHi();
         return new QuestionDTO(id, "example title", "example desc", LocalDateTime.now());
     }
 
-    public boolean deleteQuestionById(int id) {
-        // TODO
-        return false;
+    public void deleteQuestionById(int id) {
+        int affectedRows = questionsDAO.deleteQuestionById(id);
+        if (affectedRows != 1) {
+            throw new NotFoundException(String.format("Movie with id %s not found", id));
+        }
     }
 
     public int addNewQuestion(NewQuestionDTO question) {
