@@ -2,6 +2,7 @@ package com.codecool.stackoverflowtw.client;
 
 import com.codecool.stackoverflowtw.client.dto.ClientDTO;
 import com.codecool.stackoverflowtw.client.dto.NewClientDTO;
+import com.codecool.stackoverflowtw.queston.dto.NewQuestionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class ClientController {
     }
     @GetMapping("/all")
     public List<Client> getAllClient() {
-        return clientService.getAll();
+        return clientService.getAllClients();
     }
 
     @GetMapping("/{id}")
@@ -27,11 +28,10 @@ public class ClientController {
 
     @PostMapping("/")
     public int addNewClient(@RequestBody NewClientDTO client) {
-        return 0;
+        return clientService.addNewClient(client);
     }
-
-    @DeleteMapping("/{id}")
-    public boolean deleteClientById(@PathVariable int id) {
+    /*@DeleteMapping("/{id}")
+    public String deleteClientById(@PathVariable int id) {
         return clientService.deleteClientById(id);
-    }
+    }*/
 }
