@@ -30,7 +30,7 @@ public class QuestionController {
 
     @PostMapping("/")
     public int addNewQuestion(@RequestBody NewQuestionDTO question) {
-        return 0;
+        return questionService.addNewQuestion(question);
     }
 
     @DeleteMapping("/{id}")
