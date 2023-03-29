@@ -4,6 +4,7 @@ import com.codecool.stackoverflowtw.answer.dto.AnswerDTO;
 import com.codecool.stackoverflowtw.answer.dto.NewAnswerDTO;
 import com.codecool.stackoverflowtw.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,8 +18,12 @@ public class AnswerService {
         this.answersDAO = answersDAO;
     }
 
-    public List<Answer> getAllAnswers() {
-        return answersDAO.getAllAnswer();
+    public List<AnswerDTO> getAllAnswers() {
+        return answersDAO.getAllAnswer().stream().map(this::answerToAnswerDTO).toList();
+    }
+
+    public List<AnswerDTO> getAnswersOfQuestion(Integer questionId) {
+        return answersDAO.getAnswersOfQuestion(questionId).stream().map(this::answerToAnswerDTO).toList();
     }
 
     public Integer postNewAnswer(NewAnswerDTO newAnswerDTO) {

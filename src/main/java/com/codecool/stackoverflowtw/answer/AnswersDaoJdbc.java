@@ -29,6 +29,18 @@ public class AnswersDaoJdbc implements AnswersDAO {
     }
 
     @Override
+    public List<Answer> getAnswersOfQuestion(Integer questionId) {
+        String sql = """
+                SELECT id,description,date,question_id,answered_answer_id,client_id FROM answer WHERE question_id  = ?;
+                """;
+        List<Answer> answers = jdbcTemplate.query(sql, new AnswerRowMapper(), questionId);
+        if (answers.isEmpty())
+            throw new NotFoundException("No answer found by given question id");
+        else
+            return answers;
+    }
+
+    @Override
     public Integer postNewAnswer(NewAnswerDTO newAnswerDTO) {
         GeneratedKeyHolder generatedKeyHolder = new GeneratedKeyHolder();
 
