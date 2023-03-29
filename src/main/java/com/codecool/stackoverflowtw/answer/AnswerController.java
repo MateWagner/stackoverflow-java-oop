@@ -23,8 +23,8 @@ public class AnswerController {
     }
 
     @GetMapping("/answers_of_question/{questionId}")
-    public List<AnswerDTO> getAnswersOfQuestion(@PathVariable Integer questionId){
-        return answerService.getAnswersOfQuestion(questionId);  
+    public List<Answer> getAnswersOfQuestion(@PathVariable Integer questionId){
+        return answerService.getAnswersOfQuestion(questionId);
     }
 
     @PostMapping("/")
