@@ -19,7 +19,7 @@ public class AnswerService {
     }
 
     public List<AnswerDTO> getAllAnswers() {
-        return answersDAO.getAllAnswer().stream().map(this::answerToAnswerDTO).toList();
+        return answersDAO.getAllAnswer().stream().map(AnswerDTO::new).toList();
     }
 
     public List<Answer> getAnswersOfQuestion(Integer questionId) {
@@ -35,16 +35,7 @@ public class AnswerService {
     }
 
     public AnswerDTO getAnswer(Integer answerId) {
-        return answerToAnswerDTO(answersDAO.getAnswer(answerId));
+        return new AnswerDTO(answersDAO.getAnswer(answerId));
     }
 
-    //replace with AnswerDto constructor
-    private AnswerDTO answerToAnswerDTO(Answer answer) {
-        return new AnswerDTO(answer.id(),
-                answer.description(),
-                answer.date(),
-                answer.questionId(),
-                answer.client_id(),
-                answer.answeredAnswerId());
-    }
 }
