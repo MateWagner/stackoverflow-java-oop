@@ -39,6 +39,6 @@ public class AnswerService {
                 answer.date(),
                 answer.questionId(),
                 answer.client_id(),
-                answer.answerToId());
+                answer.answeredAnswerId());
     }
 }
