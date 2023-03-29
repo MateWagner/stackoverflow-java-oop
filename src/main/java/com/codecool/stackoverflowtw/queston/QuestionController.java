@@ -18,12 +18,12 @@ public class QuestionController {
     }
 
     @GetMapping("/all")
-    public List<Question> getAllQuestions() {
+    public List<QuestionDTO> getAllQuestions() {
         return questionService.getAllQuestions();
     }
 
     @GetMapping("/{id}")
-    public Question getQuestionById(@PathVariable int id) {
+    public QuestionDTO getQuestionById(@PathVariable int id) {
         return questionService.getQuestionById(id);
     }
 

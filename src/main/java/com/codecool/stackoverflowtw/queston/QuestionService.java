@@ -2,6 +2,7 @@ package com.codecool.stackoverflowtw.queston;
 
 import com.codecool.stackoverflowtw.exception.NotFoundException;
 import com.codecool.stackoverflowtw.queston.dto.NewQuestionDTO;
+import com.codecool.stackoverflowtw.queston.dto.QuestionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,19 +12,19 @@ import java.util.Optional;
 @Service
 public class QuestionService {
 
-    private QuestionsDAO questionsDAO;
+    private final QuestionsDAO questionsDAO;
 
     @Autowired
     public QuestionService(QuestionsDAO questionsDAO) {
         this.questionsDAO = questionsDAO;
     }
 
-    public List<Question> getAllQuestions() {
+    public List<QuestionDTO> getAllQuestions() {
         return questionsDAO.getAllQuestion();
     }
 
-    public Question getQuestionById(int id) {
-        Optional<Question> question = questionsDAO.getQuestionById(id);
+    public QuestionDTO getQuestionById(int id) {
+        Optional<QuestionDTO> question = questionsDAO.getQuestionById(id);
         if (question.isEmpty()) throw new NotFoundException(String.format("Question with id %s not found", id));
         return question.get();
     }
