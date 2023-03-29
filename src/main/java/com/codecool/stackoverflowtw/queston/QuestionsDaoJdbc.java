@@ -30,8 +30,8 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
                 question.date as date,
                 count(a.id) as answer_count
                 FROM question
-                inner join answer a on question.id = a.question_id
-                group by question.id
+                LEFT JOIN answer a on question.id = a.question_id
+                GROUP BY question.id
                 """;
         return jdbcTemplate.query(sql, new QuestionDTORowMapper());
     }
@@ -65,7 +65,7 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
                 DELETE FROM question
                 WHERE id = ?
                 """;
-        return  jdbcTemplate.update(sql,id);
+        return jdbcTemplate.update(sql, id);
 
     }
 
@@ -79,9 +79,9 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
                 question.date as date,
                 count(a.id) as answer_count
                 FROM question
-                inner join answer a on question.id = a.question_id
+                LEFT JOIN answer a on question.id = a.question_id
                 WHERE question.id = ?
-                group by question.id
+                GROUP BY question.id
                 """;
         return jdbcTemplate.query(sql, new QuestionDTORowMapper(), id)
                 .stream()
