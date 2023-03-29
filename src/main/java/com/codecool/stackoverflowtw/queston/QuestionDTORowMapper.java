@@ -1,19 +1,21 @@
 package com.codecool.stackoverflowtw.queston;
 
+import com.codecool.stackoverflowtw.queston.dto.QuestionDTO;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class QuestionRowMapper implements RowMapper<Question> {
+public class QuestionDTORowMapper implements RowMapper<QuestionDTO> {
     @Override
-    public Question mapRow(ResultSet rs, int rowNum) throws SQLException {
-        return new Question(
+    public QuestionDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+        return new QuestionDTO(
                 rs.getInt("id"),
                 rs.getInt("client_id"),
                 rs.getString("title"),
                 rs.getString("description"),
-                rs.getTimestamp("date").toLocalDateTime()
+                rs.getTimestamp("date").toLocalDateTime(),
+                rs.getInt("answer_count")
         );
     }
 }

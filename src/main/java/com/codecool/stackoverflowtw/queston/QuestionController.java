@@ -18,13 +18,13 @@ public class QuestionController {
     }
 
     @GetMapping("/all")
-    public List<Question> getAllQuestions() {
+    public List<QuestionDTO> getAllQuestions() {
         return questionService.getAllQuestions();
     }
 
     @GetMapping("/{id}")
     public QuestionDTO getQuestionById(@PathVariable int id) {
-        return null;
+        return questionService.getQuestionById(id);
     }
 
     @PostMapping("/")
@@ -33,8 +33,8 @@ public class QuestionController {
     }
 
     @DeleteMapping("/{id}")
-    public boolean deleteQuestionById(@PathVariable int id) {
-        questionService.deleteQuestionById(id);
-        return true;
+    public String deleteQuestionById(@PathVariable int id) {
+       return questionService.deleteQuestionById(id);
+
     }
 }

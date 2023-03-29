@@ -6,33 +6,35 @@ import com.codecool.stackoverflowtw.queston.dto.QuestionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class QuestionService {
 
-    private QuestionsDAO questionsDAO;
+    private final QuestionsDAO questionsDAO;
 
     @Autowired
     public QuestionService(QuestionsDAO questionsDAO) {
         this.questionsDAO = questionsDAO;
     }
 
-    public List<Question> getAllQuestions() {
-        // TODO
+    public List<QuestionDTO> getAllQuestions() {
         return questionsDAO.getAllQuestion();
     }
 
     public QuestionDTO getQuestionById(int id) {
-        return new QuestionDTO(id, "example title", "example desc", LocalDateTime.now());
+        Optional<QuestionDTO> question = questionsDAO.getQuestionById(id);
+        if (question.isEmpty()) throw new NotFoundException(String.format("Question with id %s not found", id));
+        return question.get();
     }
 
-    public void deleteQuestionById(int id) {
+    public String deleteQuestionById(int id) {
         int affectedRows = questionsDAO.deleteQuestionById(id);
         if (affectedRows != 1) {
-            throw new NotFoundException(String.format("Movie with id %s not found", id));
+            throw new NotFoundException(String.format("Question with id %s not found", id));
         }
+        return "OK";
     }
 
     public int addNewQuestion(NewQuestionDTO question) {
