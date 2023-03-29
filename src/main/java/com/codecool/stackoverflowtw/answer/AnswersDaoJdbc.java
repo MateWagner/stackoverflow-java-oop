@@ -1,15 +1,19 @@
 package com.codecool.stackoverflowtw.answer;
 
+import com.codecool.stackoverflowtw.answer.dto.AnswerDTO;
 import com.codecool.stackoverflowtw.answer.dto.NewAnswerDTO;
+import com.codecool.stackoverflowtw.exception.NotFoundException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
+//get answer by question id and order by time
 @Repository
 public class AnswersDaoJdbc implements AnswersDAO {
     private final JdbcTemplate jdbcTemplate;
@@ -36,10 +40,11 @@ public class AnswersDaoJdbc implements AnswersDAO {
     }
 
     @Override
-    public Integer addNewAnswer(NewAnswerDTO newAnswerDTO) {
+    public Integer postNewAnswer(NewAnswerDTO newAnswerDTO) {
         GeneratedKeyHolder generatedKeyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update(connection -> prepareAddNewAnswerPreparedStatement(connection, newAnswerDTO), generatedKeyHolder);
+
 
         Map<String, Object> keys = generatedKeyHolder.getKeys();
         if (keys == null) return -1;
@@ -47,14 +52,17 @@ public class AnswersDaoJdbc implements AnswersDAO {
     }
 
     @Override
-    public void deleteAnswer(Integer answerId) {
+    public void deleteAnswer(Integer answerId) throws NotFoundException {
         jdbcTemplate.update(SQL_QUERY_DELETE_ANSWER, answerId);
     }
 
     @Override
-    public Answer getAnswer(Integer answerId) {
+    public Answer getAnswer(Integer answerId) throws NotFoundException {
         List<Answer> answers = jdbcTemplate.query(SQL_QUERY_GET_ANSWER_BY_ID, new AnswerRowMapper(), answerId);
-        return answers.isEmpty()? null : answers.get(0);
+        if (answers.isEmpty())
+            throw new NotFoundException("No answer found by given id");
+        else
+            return answers.get(0);
     }
 
 

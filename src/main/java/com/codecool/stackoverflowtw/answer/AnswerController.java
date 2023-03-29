@@ -1,5 +1,6 @@
 package com.codecool.stackoverflowtw.answer;
 
+import com.codecool.stackoverflowtw.answer.dto.AnswerDTO;
 import com.codecool.stackoverflowtw.answer.dto.NewAnswerDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +33,7 @@ public class AnswerController {
     }
 
     @GetMapping("/{answerId}")
-    public Answer getAnswer(@PathVariable Integer answerId) {
+    public AnswerDTO getAnswer(@PathVariable Integer answerId) {
         return answerService.getAnswer(answerId);
     }
 }
