@@ -11,7 +11,6 @@ import java.util.Optional;
 
 @Service
 public class QuestionService {
-
     private final QuestionsDAO questionsDAO;
 
     @Autowired
@@ -19,7 +18,10 @@ public class QuestionService {
         this.questionsDAO = questionsDAO;
     }
 
-    public List<QuestionDTO> getAllQuestions() {
+    public List<QuestionDTO> getAllQuestions(Optional<String> orderedBy, Optional<String> order) {
+        if (orderedBy.isPresent() && order.isPresent()) {
+            return questionsDAO.getAllQuestion(orderedBy.get(), order.get());
+        }
         return questionsDAO.getAllQuestion();
     }
 
@@ -38,10 +40,6 @@ public class QuestionService {
     }
 
     public int addNewQuestion(NewQuestionDTO question) {
-        int id = questionsDAO.addNewQuestion(question);
-        if (id == -1) {
-            throw new IllegalStateException("oops something went wrong");
-        }
-        return id;
+        return questionsDAO.addNewQuestion(question);
     }
 }

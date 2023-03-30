@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("questions")
@@ -18,8 +19,8 @@ public class QuestionController {
     }
 
     @GetMapping("/all")
-    public List<QuestionDTO> getAllQuestions() {
-        return questionService.getAllQuestions();
+    public List<QuestionDTO> getAllQuestions(@RequestParam Optional<String> orderedBy, @RequestParam Optional<String> order) {
+        return questionService.getAllQuestions(orderedBy, order);
     }
 
     @GetMapping("/{id}")

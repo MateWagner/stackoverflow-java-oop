@@ -1,5 +1,6 @@
 package com.codecool.stackoverflowtw.queston;
 
+import com.codecool.stackoverflowtw.exception.NotFoundException;
 import com.codecool.stackoverflowtw.queston.dto.NewQuestionDTO;
 import com.codecool.stackoverflowtw.queston.dto.QuestionDTO;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -7,6 +8,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.text.Format;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +40,13 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
     }
 
     @Override
+    public List<QuestionDTO> getAllQuestion(String orderedBy ,String order) {
+        String sql = String.format("SELECT question.id as id, question.client_id as client_id, title, question.description as description, question.date as date, count(a.id) as answer_count FROM question LEFT JOIN answer a on question.id = a.question_id GROUP BY question.id, question.date, title ORDER BY %s %s", orderedBy, order.toUpperCase());
+
+        return jdbcTemplate.query(sql, new QuestionDTORowMapper());
+    }
+
+    @Override
     public Integer addNewQuestion(NewQuestionDTO newQuestionDTO) {
         GeneratedKeyHolder generatedKeyHolder = new GeneratedKeyHolder();
         String sql = """
@@ -47,7 +56,7 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
         jdbcTemplate.update(connection -> getPreparedStatement(newQuestionDTO, sql, connection), generatedKeyHolder);
 
         Map<String, Object> keys = generatedKeyHolder.getKeys();
-        if (keys == null) return -1;
+        if (keys == null) throw new NotFoundException("oops something went wrong");
         return (Integer) keys.get("id");
     }
 
