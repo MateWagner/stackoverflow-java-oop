@@ -28,6 +28,7 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
                 title,
                 question.description as description,
                 question.date as date,
+                solution_answer_id,
                 count(a.id) as answer_count
                 FROM question
                 LEFT JOIN answer a on question.id = a.question_id
@@ -40,7 +41,7 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
     public Integer addNewQuestion(NewQuestionDTO newQuestionDTO) {
         GeneratedKeyHolder generatedKeyHolder = new GeneratedKeyHolder();
         String sql = """
-                INSERT INTO question(title, description, client_id, date) VALUES (?,?,?,?)
+                INSERT INTO question(title, description, client_id, date,answer_solution_id) VALUES (?,?,?,?,?)
                 """;
 
         jdbcTemplate.update(connection -> getPreparedStatement(newQuestionDTO, sql, connection), generatedKeyHolder);
@@ -56,6 +57,7 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
         statement.setString(2, newQuestionDTO.description());
         statement.setInt(3, newQuestionDTO.clientId());
         statement.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
+        statement.setObject(5,null);
         return statement;
     }
 
@@ -77,6 +79,7 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
                 title,
                 question.description as description,
                 question.date as date,
+                solution_answer_id,
                 count(a.id) as answer_count
                 FROM question
                 LEFT JOIN answer a on question.id = a.question_id
