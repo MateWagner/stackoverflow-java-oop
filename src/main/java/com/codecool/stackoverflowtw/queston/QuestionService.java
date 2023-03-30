@@ -3,6 +3,7 @@ package com.codecool.stackoverflowtw.queston;
 import com.codecool.stackoverflowtw.exception.NotFoundException;
 import com.codecool.stackoverflowtw.queston.dto.NewQuestionDTO;
 import com.codecool.stackoverflowtw.queston.dto.QuestionDTO;
+import com.codecool.stackoverflowtw.queston.dto.SolutionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,5 +42,9 @@ public class QuestionService {
 
     public int addNewQuestion(NewQuestionDTO question) {
         return questionsDAO.addNewQuestion(question);
+    }
+
+    public String setSolution(SolutionDTO solution) {
+         return questionsDAO.setSolution(solution);
     }
 }

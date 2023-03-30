@@ -10,6 +10,7 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 //get answer by question id and order by time
 @Repository
@@ -61,7 +62,7 @@ public class AnswersDaoJdbc implements AnswersDAO {
     }
 
     @Override
-    public Answer getAnswer(Integer answerId) throws NotFoundException {
+    public Optional<Answer> getAnswer(Integer answerId) throws NotFoundException {
         String sql = """
                 SELECT id,description,date,question_id,answered_answer_id,client_id FROM answer WHERE id = ?
                 """;
@@ -69,7 +70,7 @@ public class AnswersDaoJdbc implements AnswersDAO {
         if (answers.isEmpty())
             throw new NotFoundException("No answer found by given id");
         else
-            return answers.get(0);
+            return Optional.of(answers.get(0));
     }
 
 

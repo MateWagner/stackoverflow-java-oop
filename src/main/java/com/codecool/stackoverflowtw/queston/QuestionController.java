@@ -2,6 +2,7 @@ package com.codecool.stackoverflowtw.queston;
 
 import com.codecool.stackoverflowtw.queston.dto.NewQuestionDTO;
 import com.codecool.stackoverflowtw.queston.dto.QuestionDTO;
+import com.codecool.stackoverflowtw.queston.dto.SolutionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +32,11 @@ public class QuestionController {
     @PostMapping("/")
     public int addNewQuestion(@RequestBody NewQuestionDTO question) {
         return questionService.addNewQuestion(question);
+    }
+
+    @PostMapping("/solution")
+    public String setSolution(@RequestBody SolutionDTO solution){
+        return questionService.setSolution(solution);
     }
 
     @DeleteMapping("/{id}")

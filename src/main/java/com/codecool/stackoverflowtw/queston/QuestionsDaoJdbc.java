@@ -1,8 +1,10 @@
 package com.codecool.stackoverflowtw.queston;
 
+import com.codecool.stackoverflowtw.answer.AnswersDaoJdbc;
 import com.codecool.stackoverflowtw.exception.NotFoundException;
 import com.codecool.stackoverflowtw.queston.dto.NewQuestionDTO;
 import com.codecool.stackoverflowtw.queston.dto.QuestionDTO;
+import com.codecool.stackoverflowtw.queston.dto.SolutionDTO;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
@@ -40,7 +42,7 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
     }
 
     @Override
-    public List<QuestionDTO> getAllQuestion(String orderedBy ,String order) {
+    public List<QuestionDTO> getAllQuestion(String orderedBy, String order) {
         String sql = String.format("SELECT question.id as id, question.client_id as client_id, title, question.description as description, question.date as date, count(a.id) as answer_count FROM question LEFT JOIN answer a on question.id = a.question_id GROUP BY question.id, question.date, title ORDER BY %s %s", orderedBy, order.toUpperCase());
 
         return jdbcTemplate.query(sql, new QuestionDTORowMapper());
@@ -66,7 +68,7 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
         statement.setString(2, newQuestionDTO.description());
         statement.setInt(3, newQuestionDTO.clientId());
         statement.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
-        statement.setObject(5,null);
+        statement.setObject(5, null);
         return statement;
     }
 
@@ -98,5 +100,26 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
         return jdbcTemplate.query(sql, new QuestionDTORowMapper(), id)
                 .stream()
                 .findFirst();
+    }
+
+    @Override
+    public String setSolution(SolutionDTO solution) {
+        AnswersDaoJdbc answersDaoJdbc = new AnswersDaoJdbc(jdbcTemplate);
+        if (getQuestionById(solution.questionId()).isPresent()) {
+            if (answersDaoJdbc.getAnswer(solution.answerId()).isPresent()) {
+                String sql = """
+                        UPDATE question
+                        SET solution_answer_id = ?
+                        WHERE  id = ?;
+                        """;
+                jdbcTemplate.update(con -> {
+                    PreparedStatement statement = con.prepareStatement(sql);
+                    statement.setInt(1, solution.answerId());
+                    statement.setInt(2, solution.questionId());
+                    return statement;
+                });
+                return "Done";
+            } else return "No answer found with the given id";
+        } else return "No question found with the given id";
     }
 }

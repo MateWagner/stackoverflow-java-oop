@@ -8,6 +8,7 @@ import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AnswerService {
@@ -35,7 +36,8 @@ public class AnswerService {
     }
 
     public AnswerDTO getAnswer(Integer answerId) {
-        return new AnswerDTO(answersDAO.getAnswer(answerId));
+        Optional<Answer> answer = answersDAO.getAnswer(answerId);
+        return answer.map(AnswerDTO::new).orElse(null);
     }
 
 }
