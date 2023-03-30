@@ -14,6 +14,7 @@ CREATE TABLE question (
     title       text                        not null,
     description text                        not null,
     date        timestamp without time zone not null,
+    solution_answer_id int,
     FOREIGN KEY (client_id) REFERENCES client (id)
 );
 
