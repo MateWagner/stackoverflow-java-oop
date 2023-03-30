@@ -85,17 +85,18 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
     @Override
     public Optional<QuestionDTO> getQuestionById(int id) {
         String sql = """
-                SELECT question.id as id,
-                question.client_id as client_id,
-                title,
-                question.description as description,
-                question.date as date,
-                solution_answer_id,
-                count(a.id) as answer_count
-                FROM question
-                LEFT JOIN answer a on question.id = a.question_id
-                WHERE question.id = ?
-                GROUP BY question.id
+                SELECT question.id as id,\s
+                       question.client_id as client_id,\s
+                       title,\s
+                       question.description as description,\s
+                       question.date as date,\s
+                       count(a.id) as answer_count,
+                       question.solution_answer_id as solution_answer_id
+                FROM question\s
+                LEFT JOIN answer a\s
+                    ON question.id = a.question_id\s
+                GROUP BY question.id, question.date, title, question.client_id, question.description, question.solution_answer_id
+                ORDER BY title DESC
                 """;
         return jdbcTemplate.query(sql, new QuestionDTORowMapper(), id)
                 .stream()
