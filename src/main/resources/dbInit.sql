@@ -22,7 +22,7 @@ CREATE TABLE answer (
     description  text                        not null,
     date         timestamp without time zone not null,
     question_id  INT                         not null,
-    answer_to_id int,
+    answered_answer_id int,
     client_id    int                         not null,
     FOREIGN KEY (client_id) REFERENCES client (id)
 );
@@ -42,7 +42,7 @@ VALUES (1, 'How do I create a new table in SQL?',
         'I have created a new table and now I want to insert some data into it. What is the syntax for inserting data into a table in SQL?',
         '2022-03-28');
 
-INSERT INTO answer (description, date, question_id, answer_to_id, client_id)
+INSERT INTO answer (description, date, question_id, answered_answer_id, client_id)
 VALUES ('To create a new table in SQL, use the CREATE TABLE statement. The syntax is CREATE TABLE table_name (column_name data_type, ...)',
         '2022-03-28', 1, NULL, 2),
        ('INNER JOIN returns only the matching rows from both tables, while OUTER JOIN returns all rows from both tables, with NULL values where there is no match.',

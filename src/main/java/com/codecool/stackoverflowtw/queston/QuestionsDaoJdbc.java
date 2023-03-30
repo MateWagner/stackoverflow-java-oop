@@ -1,5 +1,6 @@
 package com.codecool.stackoverflowtw.queston;
 
+import com.codecool.stackoverflowtw.exception.NotFoundException;
 import com.codecool.stackoverflowtw.queston.dto.NewQuestionDTO;
 import com.codecool.stackoverflowtw.queston.dto.QuestionDTO;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -54,7 +55,7 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
         jdbcTemplate.update(connection -> getPreparedStatement(newQuestionDTO, sql, connection), generatedKeyHolder);
 
         Map<String, Object> keys = generatedKeyHolder.getKeys();
-        if (keys == null) return -1;
+        if (keys == null) throw new NotFoundException("oops something went wrong");
         return (Integer) keys.get("id");
     }
 

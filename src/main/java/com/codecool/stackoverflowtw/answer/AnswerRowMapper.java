@@ -12,13 +12,13 @@ import java.util.Optional;
 public class AnswerRowMapper implements RowMapper<Answer> {
     @Override
     public Answer mapRow(ResultSet rs, int rowNum) throws SQLException {
-        Optional<Integer> answerToId = Optional.ofNullable(rs.getInt("answer_to_id"));
+        Optional<Integer> answeredAnswerId = Optional.of(rs.getInt("answered_answer_id"));
         return new Answer(
                 rs.getInt("id"),
                 rs.getString("description"),
                 rs.getTimestamp("date").toLocalDateTime(),
                 rs.getInt("question_id"),
-                answerToId,
+                answeredAnswerId,
                 rs.getInt("client_id")
         );
     }
