@@ -7,6 +7,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.text.Format;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +34,13 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
                 LEFT JOIN answer a on question.id = a.question_id
                 GROUP BY question.id
                 """;
+        return jdbcTemplate.query(sql, new QuestionDTORowMapper());
+    }
+
+    @Override
+    public List<QuestionDTO> getAllQuestion(String orderedBy ,String order) {
+        String sql = String.format("SELECT question.id as id, question.client_id as client_id, title, question.description as description, question.date as date, count(a.id) as answer_count FROM question LEFT JOIN answer a on question.id = a.question_id GROUP BY question.id, question.date, title ORDER BY %s %s", orderedBy, order.toUpperCase());
+
         return jdbcTemplate.query(sql, new QuestionDTORowMapper());
     }
 
