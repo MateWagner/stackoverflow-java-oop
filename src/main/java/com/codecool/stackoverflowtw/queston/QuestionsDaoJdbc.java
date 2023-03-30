@@ -41,7 +41,7 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
     public Integer addNewQuestion(NewQuestionDTO newQuestionDTO) {
         GeneratedKeyHolder generatedKeyHolder = new GeneratedKeyHolder();
         String sql = """
-                INSERT INTO question(title, description, client_id, date,answer_solution_id) VALUES (?,?,?,?,?)
+                INSERT INTO question(title, description, client_id, date,solution_answer_id) VALUES (?,?,?,?,?)
                 """;
 
         jdbcTemplate.update(connection -> getPreparedStatement(newQuestionDTO, sql, connection), generatedKeyHolder);
