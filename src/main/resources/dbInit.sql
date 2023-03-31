@@ -36,13 +36,13 @@ VALUES ('John Doe', 'john.doe@example.com', 'password123', '2022-03-28'),
 
 INSERT INTO question (client_id, title, description, date)
 VALUES (1, 'How do I create a new table in SQL?',
-        'I am new to SQL and I want to create a new table. Can someone help me?', '2022-03-28'),
+        'I am new to SQL and I want to create a new table. Can someone help me?', '2022-03-26 20:20:20'),
        (2, 'What is the difference between INNER JOIN and OUTER JOIN?',
         'I am confused about the different types of joins in SQL. Can someone explain the difference between INNER JOIN and OUTER JOIN?',
-        '2022-03-28'),
+        '2022-03-27  20:20:20'),
        (3, 'How can I insert data into a table?',
         'I have created a new table and now I want to insert some data into it. What is the syntax for inserting data into a table in SQL?',
-        '2022-03-28');
+        '2022-03-28 20:20:20');
 
 INSERT INTO answer (description, date, question_id, answered_answer_id, client_id)
 VALUES ('To create a new table in SQL, use the CREATE TABLE statement. The syntax is CREATE TABLE table_name (column_name data_type, ...)',

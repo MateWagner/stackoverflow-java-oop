@@ -43,7 +43,7 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
 
     @Override
     public List<QuestionDTO> getAllQuestion(String orderedBy, String order) {
-        String sql = String.format("SELECT question.id as id, question.client_id as client_id, title, question.description as description, question.date as date, count(a.id) as answer_count FROM question LEFT JOIN answer a on question.id = a.question_id GROUP BY question.id, question.date, title ORDER BY %s %s", orderedBy, order.toUpperCase());
+        String sql = String.format("SELECT question.id as id, question.client_id as client_id, title, question.description as description, question.date as date, solution_answer_id, count(a.id) as answer_count FROM question LEFT JOIN answer a on question.id = a.question_id GROUP BY question.id, question.date, title ORDER BY %s %s", orderedBy, order.toUpperCase());
 
         return jdbcTemplate.query(sql, new QuestionDTORowMapper());
     }
