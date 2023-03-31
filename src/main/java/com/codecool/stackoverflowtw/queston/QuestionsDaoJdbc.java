@@ -104,6 +104,16 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
     }
 
     @Override
+    public Optional<Question> getSingleQuestionById(int id) {
+        String sql = """
+                SELECT * FROM question WHERE question.id = ?;
+                """;
+        return jdbcTemplate.query(sql, new QuestionRowMapper(), id)
+                .stream()
+                .findFirst();
+    }
+
+    @Override
     public String setSolution(SolutionDTO solution) {
         AnswersDaoJdbc answersDaoJdbc = new AnswersDaoJdbc(jdbcTemplate);
         if (getQuestionById(solution.questionId()).isPresent()) {

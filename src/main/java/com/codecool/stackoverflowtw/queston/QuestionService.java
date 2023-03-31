@@ -32,6 +32,12 @@ public class QuestionService {
         return question.get();
     }
 
+    public Question getSingleQuestionById(int id) {
+        Optional<Question> question = questionsDAO.getSingleQuestionById(id);
+        if (question.isEmpty()) throw new NotFoundException(String.format("Question with id %s not found", id));
+        return question.get();
+    }
+
     public String deleteQuestionById(int id) {
         int affectedRows = questionsDAO.deleteQuestionById(id);
         if (affectedRows != 1) {

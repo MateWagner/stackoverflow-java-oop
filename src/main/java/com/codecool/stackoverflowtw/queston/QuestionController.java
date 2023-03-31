@@ -28,13 +28,17 @@ public class QuestionController {
     public QuestionDTO getQuestionById(@PathVariable int id) {
         return questionService.getQuestionById(id);
     }
+    @GetMapping("/single/{id}")
+    public Question getSingleQuestionById(@PathVariable int id) {
+        return questionService.getSingleQuestionById(id);
+    }
 
     @PostMapping("/")
     public int addNewQuestion(@RequestBody NewQuestionDTO question) {
         return questionService.addNewQuestion(question);
     }
 
-    @PostMapping("/solution")
+    @PatchMapping("/solution")
     public String setSolution(@RequestBody SolutionDTO solution){
         return questionService.setSolution(solution);
     }

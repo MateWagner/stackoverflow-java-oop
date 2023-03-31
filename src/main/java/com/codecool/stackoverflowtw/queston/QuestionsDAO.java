@@ -13,6 +13,6 @@ public interface QuestionsDAO {
     Integer addNewQuestion(NewQuestionDTO newQuestionDTO);
     int deleteQuestionById(int id);
     Optional<QuestionDTO> getQuestionById(int id);
-
+    Optional<Question> getSingleQuestionById(int id);
     String  setSolution(SolutionDTO solution);
 }
