@@ -59,14 +59,4 @@ public class ClientDaoJdbc implements ClientDAO {
         if (keys == null) return -1;
         return (Integer) keys.get("id");
     }
-    /*@Override
-    public String deleteClientByID(int clientID) {
-        String sql = """
-                DELETE FROM client
-                WHERE (id = ?);
-                CASCADE
-                """;
-        jdbcTemplate.update(sql, clientID);
-        return "Delete the client which ID was: " + clientID;
-    }*/
 }

@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-//get answer by question id and order by time
 @Repository
 public class AnswersDaoJdbc implements AnswersDAO {
     private final JdbcTemplate jdbcTemplate;

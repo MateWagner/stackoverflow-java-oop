@@ -2,9 +2,7 @@ package com.codecool.stackoverflowtw.answer;
 
 import com.codecool.stackoverflowtw.answer.dto.AnswerDTO;
 import com.codecool.stackoverflowtw.answer.dto.NewAnswerDTO;
-import com.codecool.stackoverflowtw.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,7 +10,7 @@ import java.util.Optional;
 
 @Service
 public class AnswerService {
-    private AnswersDAO answersDAO;
+    private final AnswersDAO answersDAO;
 
     @Autowired
     public AnswerService(AnswersDAO answersDAO) {

@@ -10,5 +10,4 @@ public interface ClientDAO {
     List<Client> getAllClients();
     Optional<Client> getClientByID(int id);
     Integer addNewClient(NewClientDTO newClientDTO);
-    //String deleteClientByID(int id);
 }

@@ -12,13 +12,12 @@ import java.util.Optional;
 
 @Service
 public class ClientService {
-    private ClientDAO clientDAO;
+    private final ClientDAO clientDAO;
     @Autowired
     public ClientService(ClientDAO clientDAO) {
         this.clientDAO = clientDAO;
     }
     public List<Client> getAllClients() {
-        // TODO
         return clientDAO.getAllClients();
     }
     public Client getClientById(int id) {
@@ -30,7 +29,4 @@ public class ClientService {
     public int addNewClient(NewClientDTO client) {
         return clientDAO.addNewClient(client);
     }
-    /*public String deleteClientById(int id) {
-        return clientDAO.deleteClientByID(id);
-    }*/
 }

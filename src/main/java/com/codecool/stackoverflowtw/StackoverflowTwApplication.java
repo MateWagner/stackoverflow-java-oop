@@ -12,7 +12,6 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan("com.codecool.stackoverflowtw.answer")
 @ComponentScan("com.codecool.stackoverflowtw.client")
 @ComponentScan("com.codecool.stackoverflowtw.queston")
-@ComponentScan("com.codecool.stackoverflowtw.controller")
 public class StackoverflowTwApplication {
 
     public static void main(String[] args) {

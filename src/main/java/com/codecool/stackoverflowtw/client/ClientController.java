@@ -30,8 +30,4 @@ public class ClientController {
     public int addNewClient(@RequestBody NewClientDTO client) {
         return clientService.addNewClient(client);
     }
-    /*@DeleteMapping("/{id}")
-    public String deleteClientById(@PathVariable int id) {
-        return clientService.deleteClientById(id);
-    }*/
 }
