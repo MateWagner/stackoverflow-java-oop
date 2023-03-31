@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("questions")
+@RequestMapping("/api/questions")
 public class QuestionController {
     private final QuestionService questionService;
 

@@ -43,7 +43,7 @@ public class ClientDaoJdbc implements ClientDAO {
     public Integer addNewClient(NewClientDTO newClientDTO) {
         GeneratedKeyHolder generatedKeyHolder = new GeneratedKeyHolder();
         String sql = """
-                INSERT INTO client(name, email, password, date) VALUES (?,?,?,?)
+                INSERT INTO client(name, email, password, date) VALUES (?,?,?,?);
                 """;
 
         jdbcTemplate.update(connection -> {

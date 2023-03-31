@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("answers")
+@RequestMapping("/api/answers")
 public class AnswerController {
     private final AnswerService answerService;
 
@@ -29,6 +29,7 @@ public class AnswerController {
 
     @PostMapping("/")
     public Integer postNewAnswer(@RequestBody NewAnswerDTO answerDTO) {
+        System.out.println("called: " + answerDTO.desc());
         return answerService.postNewAnswer(answerDTO);
     }
 
