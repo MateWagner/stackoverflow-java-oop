@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS answer, question, client CASCADE;
+DROP TABLE IF EXISTS answer, admin, question, client CASCADE;
 
 CREATE TABLE client (
     id       SERIAL PRIMARY KEY,
@@ -7,6 +7,12 @@ CREATE TABLE client (
     password TEXT,
     solution_answer_id int,
     date     timestamp without time zone not null
+);
+
+CREATE TABLE admin (
+    id SERIAL PRIMARY KEY,
+    client_id int,
+    FOREIGN KEY (client_id) REFERENCES client (id)
 );
 
 CREATE TABLE question (
@@ -51,3 +57,5 @@ VALUES ('To create a new table in SQL, use the CREATE TABLE statement. The synta
         '2022-03-28', 2, NULL, 3),
        ('To insert data into a table in SQL, use the INSERT INTO statement. The syntax is INSERT INTO table_name (column1, column2, ...) VALUES (value1, value2, ...)',
         '2022-03-28', 3, NULL, 1);
+
+INSERT INTO admin (client_id) values (1);
