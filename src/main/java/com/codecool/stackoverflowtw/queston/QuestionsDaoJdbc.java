@@ -96,8 +96,8 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
                        question.solution_answer_id as solution_answer_id
                 FROM question
                 LEFT JOIN answer a
-                    ON question.id = a.question_id
-                GROUP BY question.id, question.date, title, question.client_id, question.description, question.solution_answer_id
+                    ON id = a.question_id
+                GROUP BY id, question.date, title, question.client_id, question.description, question.solution_answer_id
                 ORDER BY title DESC;
                 """;
         return jdbcTemplate.query(sql, new QuestionDTORowMapper(), id)
