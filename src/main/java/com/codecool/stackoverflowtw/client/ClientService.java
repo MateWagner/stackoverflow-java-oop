@@ -1,10 +1,9 @@
 package com.codecool.stackoverflowtw.client;
 
-import com.codecool.stackoverflowtw.client.dto.ClientDTO;
+import com.codecool.stackoverflowtw.client.dto.LoginClientDTO;
 import com.codecool.stackoverflowtw.client.dto.NewClientDTO;
 import com.codecool.stackoverflowtw.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,5 +27,11 @@ public class ClientService {
     }
     public int addNewClient(NewClientDTO client) {
         return clientDAO.addNewClient(client);
+    }
+
+    public LoginClientDTO getClient(LoginData loginData) {
+        Optional<LoginClientDTO> optionalUser = clientDAO.loginUser(loginData);
+        if (optionalUser.isEmpty()) throw new NotFoundException("There was no client with email or Pw");
+        return optionalUser.get();
     }
 }

@@ -5,7 +5,6 @@ CREATE TABLE client (
     name     text                        not null,
     email    text                        not null,
     password TEXT,
-    solution_answer_id int,
     date     timestamp without time zone not null
 );
 

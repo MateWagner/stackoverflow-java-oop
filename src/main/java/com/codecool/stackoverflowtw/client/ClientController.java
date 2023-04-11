@@ -1,8 +1,7 @@
 package com.codecool.stackoverflowtw.client;
 
-import com.codecool.stackoverflowtw.client.dto.ClientDTO;
+import com.codecool.stackoverflowtw.client.dto.LoginClientDTO;
 import com.codecool.stackoverflowtw.client.dto.NewClientDTO;
-import com.codecool.stackoverflowtw.queston.dto.NewQuestionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +23,10 @@ public class ClientController {
     @GetMapping("/{id}")
     public Client getClientById(@PathVariable int id) {
         return clientService.getClientById(id);
+    }
+    @PostMapping("/login")
+    public LoginClientDTO logIn(@RequestBody LoginData loginData) {
+        return clientService.getClient(loginData);
     }
 
     @PostMapping("/")

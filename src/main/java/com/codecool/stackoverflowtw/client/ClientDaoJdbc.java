@@ -1,7 +1,7 @@
 package com.codecool.stackoverflowtw.client;
 
+import com.codecool.stackoverflowtw.client.dto.LoginClientDTO;
 import com.codecool.stackoverflowtw.client.dto.NewClientDTO;
-import com.codecool.stackoverflowtw.queston.dto.NewQuestionDTO;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
@@ -58,5 +58,23 @@ public class ClientDaoJdbc implements ClientDAO {
         Map<String, Object> keys = generatedKeyHolder.getKeys();
         if (keys == null) return -1;
         return (Integer) keys.get("id");
+    }
+
+    @Override
+    public Optional<LoginClientDTO> loginUser(LoginData loginData) {
+        String sql = """
+                SELECT client.id,
+                       name,
+                       email,
+                       password,
+                       date,
+                       COALESCE((a.client_id = client.id), false)
+                        as is_admin
+                FROM client
+                LEFT JOIN admin a on client.id = a.client_id
+                WHERE email = ? AND password = ?;
+                """;
+        return jdbcTemplate.query(sql, new LoginClientRowMapper(), loginData.email(), loginData.password()).stream()
+                .findFirst();
     }
 }

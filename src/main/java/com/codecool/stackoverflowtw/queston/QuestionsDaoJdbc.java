@@ -12,7 +12,6 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
-import java.text.Format;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -95,22 +94,11 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
                        count(a.id) as answer_count,
                        question.solution_answer_id as solution_answer_id
                 FROM question
-                LEFT JOIN answer a
-                    ON id = a.question_id
-                GROUP BY id, question.date, title, question.client_id, question.description, question.solution_answer_id
-                ORDER BY title DESC;
+                LEFT JOIN answer a ON question.id = a.question_id
+                WHERE question_id = ?
+                GROUP BY question.id, question.date, title, question.client_id, question.description, question.solution_answer_id
                 """;
         return jdbcTemplate.query(sql, new QuestionDTORowMapper(), id)
-                .stream()
-                .findFirst();
-    }
-
-    @Override
-    public Optional<Question> getSingleQuestionById(int id) {
-        String sql = """
-                SELECT * FROM question WHERE question.id = ?;
-                """;
-        return jdbcTemplate.query(sql, new QuestionRowMapper(), id)
                 .stream()
                 .findFirst();
     }
