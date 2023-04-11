@@ -1,6 +1,5 @@
 package com.codecool.stackoverflowtw.queston;
 
-import com.codecool.stackoverflowtw.answer.AnswersDaoJdbc;
 import com.codecool.stackoverflowtw.exception.NotFoundException;
 import com.codecool.stackoverflowtw.queston.data.ColumnNameForOrder;
 import com.codecool.stackoverflowtw.queston.data.Order;
@@ -104,23 +103,13 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
     }
 
     @Override
-    public String setSolution(SolutionDTO solution) {
-        AnswersDaoJdbc answersDaoJdbc = new AnswersDaoJdbc(jdbcTemplate);
-        if (getQuestionById(solution.questionId()).isPresent()) {
-            if (answersDaoJdbc.getAnswer(solution.answerId()).isPresent()) {
-                String sql = """
-                        UPDATE question
-                        SET solution_answer_id = ?
-                        WHERE  id = ?;
-                        """;
-                jdbcTemplate.update(con -> {
-                    PreparedStatement statement = con.prepareStatement(sql);
-                    statement.setInt(1, solution.answerId());
-                    statement.setInt(2, solution.questionId());
-                    return statement;
-                });
-                return "Done";
-            } else return "No answer found with the given id";
-        } else return "No question found with the given id";
+    public int setSolution(SolutionDTO solution) {
+        String sql = """
+                UPDATE question
+                SET solution_answer_id = ?
+                WHERE  id = ?;
+                """;
+        return jdbcTemplate.update(sql, solution.answerId(), solution.questionId());
+
     }
 }

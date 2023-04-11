@@ -50,7 +50,8 @@ public class QuestionService {
         return questionsDAO.addNewQuestion(question);
     }
 
-    public String setSolution(SolutionDTO solution) {
-         return questionsDAO.setSolution(solution);
+    public void setSolution(SolutionDTO solution) {
+        int effected = questionsDAO.setSolution(solution);
+        if (effected == 0) throw new NotFoundException("Can't Change on question id: " + solution.questionId());
     }
 }

@@ -35,8 +35,8 @@ public class QuestionController {
     }
 
     @PatchMapping("/solution")
-    public String setSolution(@RequestBody SolutionDTO solution){
-        return questionService.setSolution(solution);
+    public void setSolution(@RequestBody SolutionDTO solution){
+        questionService.setSolution(solution);
     }
 
     @DeleteMapping("/{id}")
