@@ -1,6 +1,8 @@
 package com.codecool.stackoverflowtw.queston;
 
 import com.codecool.stackoverflowtw.exception.NotFoundException;
+import com.codecool.stackoverflowtw.queston.data.ColumnNameForOrder;
+import com.codecool.stackoverflowtw.queston.data.Order;
 import com.codecool.stackoverflowtw.queston.dto.NewQuestionDTO;
 import com.codecool.stackoverflowtw.queston.dto.QuestionDTO;
 import com.codecool.stackoverflowtw.queston.dto.SolutionDTO;
@@ -21,9 +23,13 @@ public class QuestionService {
 
     public List<QuestionDTO> getAllQuestions(Optional<String> orderedBy, Optional<String> order) {
         if (orderedBy.isPresent() && order.isPresent()) {
-            return questionsDAO.getAllQuestion(orderedBy.get(), order.get());
+        Optional<ColumnNameForOrder> optionalColumn = ColumnNameForOrder.isMatchAny(orderedBy.get());
+        Optional<Order> optionalOrder = Order.isMatchAny(order.get());
+        if (optionalOrder.isPresent() && optionalColumn.isPresent())
+            return questionsDAO.getAllQuestion(optionalColumn.get(), optionalOrder.get());
         }
         return questionsDAO.getAllQuestion();
+        // TODO SLAP
     }
 
     public QuestionDTO getQuestionById(int id) {
