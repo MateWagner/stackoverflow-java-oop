@@ -35,13 +35,18 @@ public class QuestionController {
     }
 
     @PatchMapping("/solution")
-    public void setSolution(@RequestBody SolutionDTO solution){
+    public void setSolution(@RequestBody SolutionDTO solution) {
         questionService.setSolution(solution);
     }
 
     @DeleteMapping("/{id}")
     public String deleteQuestionById(@PathVariable int id) {
-       return questionService.deleteQuestionById(id);
+        return questionService.deleteQuestionById(id);
 
+    }
+
+    @PatchMapping("/{id}")
+    public void updateQuestion(@PathVariable int id, @RequestBody NewQuestionDTO update) {
+        questionService.updateQuestion(id, update);
     }
 }

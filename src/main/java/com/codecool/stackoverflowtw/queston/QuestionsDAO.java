@@ -16,4 +16,6 @@ public interface QuestionsDAO {
     int deleteQuestionById(int id);
     Optional<QuestionDTO> getQuestionById(int id);
     int setSolution(SolutionDTO solution);
+    int deleteAnswersWithQuestionByQuestionId(int id);
+    int updateQuestion(int id, NewQuestionDTO update);
 }

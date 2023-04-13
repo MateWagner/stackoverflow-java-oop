@@ -39,7 +39,7 @@ public class QuestionService {
     }
 
     public String deleteQuestionById(int id) {
-        int affectedRows = questionsDAO.deleteQuestionById(id);
+        int affectedRows = questionsDAO.deleteAnswersWithQuestionByQuestionId(id);
         if (affectedRows != 1) {
             throw new NotFoundException(String.format("Question with id %s not found", id));
         }
@@ -53,5 +53,12 @@ public class QuestionService {
     public void setSolution(SolutionDTO solution) {
         int effected = questionsDAO.setSolution(solution);
         if (effected == 0) throw new NotFoundException("Can't Change on question id: " + solution.questionId());
+    }
+
+    public void updateQuestion(int id, NewQuestionDTO update) {
+        int affectedRows = questionsDAO.updateQuestion(id, update);
+        if (affectedRows != 1) {
+            throw new NotFoundException(String.format("Question with id %s not found", id));
+        }
     }
 }

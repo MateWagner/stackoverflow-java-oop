@@ -74,12 +74,42 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
 
     @Override
     public int deleteQuestionById(int id) {
+        String getAllAnswerID = """
+           DELETE FROM answer WHERE question_id  = ?;
+                """;
+        jdbcTemplate.update(getAllAnswerID, id);
+
         String sql = """
                 DELETE FROM question
                 WHERE id = ?;
                 """;
         return jdbcTemplate.update(sql, id);
 
+    }
+    @Override
+    public int deleteAnswersWithQuestionByQuestionId(int id) {
+        String getAllAnswerID = """
+           DELETE FROM answer WHERE question_id  = ?;
+                """;
+        jdbcTemplate.update(getAllAnswerID, id);
+
+        String sql = """
+                DELETE FROM question
+                WHERE id = ?;
+                """;
+        return jdbcTemplate.update(sql, id);
+
+    }
+
+    @Override
+    public int updateQuestion(int id, NewQuestionDTO update) {
+        System.out.println(id);
+        String sql = """
+                UPDATE question
+                SET title = ?, description = ?
+                WHERE id = ?
+                """;
+        return jdbcTemplate.update(sql, update.title(), update.description(), id);
     }
 
     @Override
@@ -94,7 +124,7 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
                        question.solution_answer_id as solution_answer_id
                 FROM question
                 LEFT JOIN answer a ON question.id = a.question_id
-                WHERE question_id = ?
+                WHERE question.id = ?
                 GROUP BY question.id, question.date, title, question.client_id, question.description, question.solution_answer_id
                 """;
         return jdbcTemplate.query(sql, new QuestionDTORowMapper(), id)

@@ -16,7 +16,7 @@ public final class AnswerDTO {
         this.desc = answer.description();
         this.date = answer.date();
         this.questionId = answer.questionId();
-        this.clientId = answer.client_id();
+        this.clientId = answer.clientId();
         this.answeredAnswerId = answer.answeredAnswerId();
     }
 

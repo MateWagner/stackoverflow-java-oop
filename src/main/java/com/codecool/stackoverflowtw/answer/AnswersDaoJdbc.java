@@ -33,11 +33,8 @@ public class AnswersDaoJdbc implements AnswersDAO {
         String sql = """
                 SELECT id,description,date,question_id,answered_answer_id,client_id FROM answer WHERE question_id  = ?;
                 """;
-        List<Answer> answers = jdbcTemplate.query(sql, new AnswerRowMapper(), questionId);
-//        if (answers.isEmpty())
-//            throw new NotFoundException("No answer found by given question id");
-//        else
-            return answers;
+
+        return jdbcTemplate.query(sql, new AnswerRowMapper(), questionId);
     }
 
     @Override
@@ -45,7 +42,6 @@ public class AnswersDaoJdbc implements AnswersDAO {
         GeneratedKeyHolder generatedKeyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update(connection -> prepareAddNewAnswerPreparedStatement(connection, newAnswerDTO), generatedKeyHolder);
-
 
         Map<String, Object> keys = generatedKeyHolder.getKeys();
         if (keys == null) return -1;
@@ -65,13 +61,19 @@ public class AnswersDaoJdbc implements AnswersDAO {
         String sql = """
                 SELECT id,description,date,question_id,answered_answer_id,client_id FROM answer WHERE id = ?
                 """;
-        List<Answer> answers = jdbcTemplate.query(sql, new AnswerRowMapper(), answerId);
-        if (answers.isEmpty())
-            throw new NotFoundException("No answer found by given id");
-        else
-            return Optional.of(answers.get(0));
+        return jdbcTemplate.query(sql, new AnswerRowMapper(), answerId).stream()
+                .findFirst();
     }
 
+    @Override
+    public int updateAnswer(int id, NewAnswerDTO answerDTO) {
+        String sql = """
+                UPDATE answer
+                SET description = ?
+                where id = ?
+                """;
+        return jdbcTemplate.update(sql, answerDTO.desc(), id);
+    }
 
     private PreparedStatement prepareAddNewAnswerPreparedStatement(Connection connection, NewAnswerDTO newAnswerDTO) throws SQLException {
         String sql = """

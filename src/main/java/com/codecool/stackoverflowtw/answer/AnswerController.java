@@ -32,14 +32,17 @@ public class AnswerController {
         System.out.println("called: " + answerDTO.desc());
         return answerService.postNewAnswer(answerDTO);
     }
-
+    @PatchMapping("/{id}")
+    public void updateAnswer(@PathVariable int id, @RequestBody NewAnswerDTO answerDTO) {
+        answerService.updateAnswer(id, answerDTO);
+    }
     @DeleteMapping("/{answerId}")
     public void deleteAnswer(@PathVariable Integer answerId) {
         answerService.deleteAnswer(answerId);
     }
 
     @GetMapping("/{answerId}")
-    public AnswerDTO getAnswer(@PathVariable Integer answerId) {
+    public Answer getAnswer(@PathVariable Integer answerId) {
         return answerService.getAnswer(answerId);
     }
 }

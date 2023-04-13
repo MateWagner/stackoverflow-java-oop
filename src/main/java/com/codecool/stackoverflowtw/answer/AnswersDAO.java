@@ -11,5 +11,5 @@ public interface AnswersDAO {
     Integer postNewAnswer(NewAnswerDTO newAnswerDTO);
     void deleteAnswer(Integer answerId);
     Optional<Answer> getAnswer(Integer answerId);
-
+    int updateAnswer(int id, NewAnswerDTO answerDTO);
 }

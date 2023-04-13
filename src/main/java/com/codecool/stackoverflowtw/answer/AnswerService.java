@@ -2,6 +2,7 @@ package com.codecool.stackoverflowtw.answer;
 
 import com.codecool.stackoverflowtw.answer.dto.AnswerDTO;
 import com.codecool.stackoverflowtw.answer.dto.NewAnswerDTO;
+import com.codecool.stackoverflowtw.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,9 +34,16 @@ public class AnswerService {
         answersDAO.deleteAnswer(answerId);
     }
 
-    public AnswerDTO getAnswer(Integer answerId) {
+    public Answer getAnswer(Integer answerId) {
         Optional<Answer> answer = answersDAO.getAnswer(answerId);
-        return answer.map(AnswerDTO::new).orElse(null);
+        if (answer.isEmpty()) throw new NotFoundException("there is no answer with id: " + answerId);
+        return answer.get();
     }
 
+    public void updateAnswer(int id, NewAnswerDTO answerDTO) {
+        int affectedRows = answersDAO.updateAnswer(id, answerDTO);
+        if (affectedRows != 1) {
+            throw new NotFoundException(String.format("Question with id %s not found", id));
+        }
+    }
 }
