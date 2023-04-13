@@ -37,7 +37,9 @@ CREATE TABLE answer (
 INSERT INTO client (name, email, password, date)
 VALUES ('John Doe', 'john.doe@example.com', 'password123', '2022-03-28'),
        ('Jane Smith', 'jane.smith@example.com', 'password456', '2022-03-28'),
-       ('Bob Johnson', 'bob.johnson@example.com', 'password789', '2022-03-28');
+       ('Bob Johnson', 'bob.johnson@example.com', 'password789', '2022-03-28'),
+       ('none', 'none@codecool.com', 'none', '2022-03-28'),
+       ('admin', 'admin@codecool.com', 'admin', '2022-03-28');
 
 INSERT INTO question (client_id, title, description, date)
 VALUES (1, 'How do I create a new table in SQL?',
@@ -57,4 +59,4 @@ VALUES ('To create a new table in SQL, use the CREATE TABLE statement. The synta
        ('To insert data into a table in SQL, use the INSERT INTO statement. The syntax is INSERT INTO table_name (column1, column2, ...) VALUES (value1, value2, ...)',
         '2022-03-28', 3, NULL, 1);
 
-INSERT INTO admin (client_id) values (1);
+INSERT INTO admin (client_id) values (5);
